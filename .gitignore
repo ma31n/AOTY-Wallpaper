@@ -1,0 +1,17 @@
+# Configuration files with sensitive data
+config.js
+
+# Generated data
+AOTYjson.txt
+
+# Environment variables
+.env
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node.js
+node_modules/
