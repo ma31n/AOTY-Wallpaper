@@ -1,4 +1,4 @@
-# AOTY Wallpaper
+# AOTY Wallpaper for Lively Wallpaper
 
 A dynamic wallpaper application that displays your album ratings from Album of the Year (AOTY) with album artwork and track listings powered by Last.fm API.
 
