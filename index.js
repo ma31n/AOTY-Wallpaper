@@ -34,7 +34,7 @@ let api_key = '9cac2ae29a26c0653a024c68295349e3';
 let username = 'ma31nho';
 
 async function searchLastFM(artist, album){
-    return fetch(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${api_key}&artist=${artist}&album=${album}&username=${username}&autocorrect=1&format=json`)
+    return fetch(`https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${api_key}&artist=${artist}&album=${album}&username=${username}&autocorrect=1&format=json`)
     .then(response => response.json()) 
 }
 
