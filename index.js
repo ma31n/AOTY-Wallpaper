@@ -8,21 +8,47 @@ function update(){
         searchLastFM(obj[rand].artist, obj[rand].album)
         .then(data => {
             console.log(data);
-            document.getElementById('cover').src = data.album.image[4]['#text'];
-            document.getElementById('artist').innerText = "by " + obj[rand].artist;
-            document.getElementById('album').innerText = obj[rand].album;
-            document.getElementById('rating-bar').innerText = `${obj[rand].rating}`;
-            document.getElementById('rating-bar').style.width = `${obj[rand].rating}%`;
-
-            let list = document.getElementsByTagName('ol')[0];
-            list.innerHTML = '';
-            for(let i = 0; i < data.album.tracks.track.length; i++){
-                let newli = document.createElement('li');
-                newli.innerText = data.album.tracks.track[i].name;
-                list.appendChild(newli);
+            if(!data.album || !data.album.tracks){
+                console.log('retrying...');
+                update();
+                return;
             }
 
-            document.getElementById('bg-img').src = data.album.image[4]['#text'];
+
+            function load(data){
+
+                document.getElementById('cover').src = data.album.image[4]['#text'];
+                document.getElementById('artist').innerText = "by " + obj[rand].artist;
+                document.getElementById('album').innerText = obj[rand].album;
+                document.getElementById('rating-bar').innerText = `${obj[rand].rating}`;
+                document.getElementById('rating-bar').style.width = `${obj[rand].rating}%`;
+
+                let list = document.getElementsByTagName('ol')[0];
+                list.innerHTML = '';
+                for(let i = 0; i < data.album.tracks.track.length; i++){
+                    let newli = document.createElement('li');
+                    newli.innerText = data.album.tracks.track[i].name;
+                    list.appendChild(newli);
+                }
+
+                document.getElementById('main').style.opacity = '1';
+
+            }
+
+            let img = document.getElementById('bg-img');
+            img.src = data.album.image[4]['#text'];
+
+            img.onload = function(){
+                document.getElementById('main').style.opacity = '0';
+
+                document.getElementById('main').addEventListener('transitionend', function handler(){
+                    console.log('hoće');
+                    load(data);
+                    document.getElementById('main').removeEventListener('transitionend', handler);
+                });
+
+            }
+
         });
 
     });
@@ -38,4 +64,4 @@ async function searchLastFM(artist, album){
     .then(response => response.json()) 
 }
 
-document.getElementById('btn').addEventListener('click', update);
+window.addEventListener('keypress', update);
