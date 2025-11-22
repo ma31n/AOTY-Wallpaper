@@ -54,7 +54,7 @@ function update(){
     });
 }
 
-setInterval(update, 5000);
+setInterval(update, 30000);
 
 let api_key = '9cac2ae29a26c0653a024c68295349e3';
 let username = 'ma31nho';
