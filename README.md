@@ -8,7 +8,7 @@ A dynamic wallpaper application that displays your album ratings from Album of t
 - Last.fm API for album information and artwork
 - [AlbumOfTheYearAPI](https://github.com/JahsiasWhite/AlbumOfTheYearAPI) by JahsiasWhite (used in background Python script to fetch ratings)
 
-Built for [Lively Wallpaper](https://rocksdanister.github.io/lively/), a free and open-source Windows application that allows you to set animated and interactive wallpapers, bringing your desktop background to life.
+Built for [Lively Wallpaper](https://github.com/JahsiasWhite/AlbumOfTheYearAPI), a free and open-source Windows application that allows you to set animated and interactive wallpapers, bringing your desktop background to life.
 
 ## How to set up the wallpaper
 
