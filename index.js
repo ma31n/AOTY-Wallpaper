@@ -76,7 +76,14 @@ function settingsUpdate(e){
 }
 
 let settings = localStorage.getItem('settings');
-console.log(settings);
+if(settings!==null){
+    settings = JSON.parse(settings);
+
+    document.getElementById('interval').value = settings.interval;
+    document.getElementById('rating').value = settings.minRating;
+    document.getElementById('api_key').value = settings.apiKey;
+    document.getElementById('username').value = settings.username;
+}
 
 update();
 setInterval(update, 30000);
