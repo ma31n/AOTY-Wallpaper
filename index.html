@@ -38,12 +38,26 @@
 
         <div id="settings-container">
             <div id="settings">
-                <label for = "interval">Next album interval(seconds): </label>
-                <input type = "number" id="interval"/><br>
-                <label for = "rating">Minimum rating(0-100): </label>
-                <input type ="number" id="rating" min="0" max="100"/><br>
-                <label for = "data">Album info(.txt file in JSON format): </label>
-                <input type ="file" id="data" accept=".txt"/><br>
+
+                <form id="settings-form">
+                    <label for = "interval">Next album interval(seconds): </label>
+                    <input type = "number" id="interval" value="30"/><br>
+
+                    <label for = "rating">Minimum rating(0-100): </label>
+                    <input type = "number" id="rating" min="0" max="100" value="0"/><br>
+
+                    <label for = "data">Album info(.txt file in JSON format): </label>
+                    <input type = "file" id="data" accept=".txt" required/><br>
+
+                    <label for = "api_key">Last.fm API Key: </label>
+                    <input type = "text" id="api_key" required/><br>
+
+                    <label for = "username">Last.fm Username: </label>
+                    <input type = "text" id="username" required/><br>
+
+                    <input type = "submit" value="Save"/>
+                </form>
+
             </div>
         </div>
 

@@ -54,6 +54,31 @@ function update(){
     });
 }
 
+function settingsUpdate(e){
+    e.preventDefault();
+
+    let interval = document.getElementById('interval').value;
+    let minRating = document.getElementById('rating').value;
+    let jsonData = document.getElementById('data').value;
+    let apiKey = document.getElementById('api_key').value;
+    let username = document.getElementById('username').value;
+    
+    settings = {
+        interval: interval,
+        minRating: minRating,
+        jsonData: jsonData,
+        apiKey: apiKey,
+        username: username
+    };
+
+    localStorage.setItem('settings', JSON.stringify(settings));
+
+}
+
+let settings = localStorage.getItem('settings');
+console.log(settings);
+
+update();
 setInterval(update, 30000);
 
 let api_key = '9cac2ae29a26c0653a024c68295349e3';
@@ -65,3 +90,5 @@ async function searchLastFM(artist, album){
 }
 
 window.addEventListener('keypress', update);
+
+document.getElementById("settings-form").addEventListener('submit', settingsUpdate);
