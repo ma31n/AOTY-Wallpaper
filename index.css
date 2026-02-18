@@ -90,6 +90,7 @@ ol li{
 
 #settings-container{
     position: absolute;
+    bottom: 100px;
     margin: 0 auto;
     width: fit-content;
     background-color: rgb(30, 65, 65);

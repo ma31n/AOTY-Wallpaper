@@ -1,5 +1,20 @@
+function getJSONdataFromUsername(username){
+    username = username.toLowerCase();
+    username = username.replaceAll('_', '-');
+    console.log(`fetching data for ${username}...`);
+    return fetch(`https://aotywallpaperhelper-1.onrender.com/user/${username}`)
+}
+
 function update(){
-    let obj = JSON.parse(data);
+    
+    if(settings.username==null || settings.apiKey==null){
+        document.getElementById('artist').innerText = "Please fill in the settings form.";
+        console.log('missing settings...');
+        return;
+    }
+
+
+    let obj = JSON.parse(settings.jsonData);
 
     let rand = Math.floor(Math.random() * obj.length);
     //`${obj[rand].artist}\n${obj[rand].album}\n${obj[rand].rating}`;
@@ -10,9 +25,13 @@ function update(){
         if(!data.album || !data.album.tracks){
             console.log('retrying...');
             update();
+            return;   
+        }
+        if(obj[rand].rating <= settings.minRating){
+            console.log('rating too low, retrying...');
+            update();
             return;
         }
-
 
         function load(data){
 
@@ -41,7 +60,7 @@ function update(){
             document.getElementById('main').style.opacity = '0';
 
             document.getElementById('main').addEventListener('transitionend', function handler(){
-                console.log('hoće');
+
                 load(data);
                 document.getElementById('main').removeEventListener('transitionend', handler);
             });
@@ -52,62 +71,80 @@ function update(){
 
 }
 
-function settingsUpdate(e){
+async function settingsUpdate(e){
     e.preventDefault();
-
+    console.log('updating settings...');
     let interval = document.getElementById('interval').value;
     let minRating = document.getElementById('rating').value;
-    let jsonData = document.getElementById('data').value;
     let apiKey = document.getElementById('api_key').value;
     let username = document.getElementById('username').value;
 
-    settings = {
-        interval: interval,
-        minRating: minRating,
-        jsonData: jsonData,
-        apiKey: apiKey,
-        username: username
-    };
-
-    let reader = new FileReader();
-    reader.readAsText(document.getElementById('data').files[0]);
-    
-    reader.onload = function(e) {
-        let contents = e.target.result;
-        settings.jsonData = contents;
-        
-        localStorage.setItem('settings', JSON.stringify(settings));
+    if(username!=settings.username){
+        await getJSONdataFromUsername(username)
+        .then(response => {
+            if(response.ok) return response.json()
+            window.alert('Failed to fetch user data. Please check your username and try again.');
+            throw new Error('Failed to fetch user data', response.status);
+            })
+        .then(data => {
+            settings.jsonData = JSON.stringify(data);
+            console.log('fetched user!', settings.jsonData);
+            document.getElementById('json-display').innerText = settings.jsonData;
+            update();
+        });
     }
+
+    if(interval != settings.interval){
+        clearInterval(update);
+        setInterval(update, interval * 1000);
+    }
+
+    settings.interval = interval;
+    settings.minRating = minRating;
+    settings.apiKey = apiKey;
+    settings.username = username;
+
     
+
+    localStorage.setItem('settings', JSON.stringify(settings));
+
 }
 
 async function searchLastFM(artist, album){
-    return fetch(`https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${api_key}&artist=${artist}&album=${album}&username=${username}&autocorrect=1&format=json`)
+    return fetch(`https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${settings.apiKey}&artist=${artist}&album=${album}&username=${settings.username}&autocorrect=1&format=json`)
     .then(response => response.json()) 
 }
 
-let api_key = '9cac2ae29a26c0653a024c68295349e3';
-let username = 'ma31nho';
-let data = null;
 
-let settings = localStorage.getItem('settings');
+//CODE START
+let settings = {
+    interval: document.getElementById('interval').value,
+    minRating: document.getElementById('rating').value,
+    apiKey: null,
+    username: null,
+    jsonData: null
+}
+
+let temp = localStorage.getItem('settings');
 console.log(settings);
-if(settings!==null){
-    settings = JSON.parse(settings);
+if(temp!==null){
+    temp = JSON.parse(temp);
 
-    document.getElementById('interval').value = settings.interval;
-    document.getElementById('rating').value = settings.minRating;
-    document.getElementById('api_key').value = settings.apiKey;
-    document.getElementById('username').value = settings.username;
-    document.getElementById('json-display').innerText = settings.jsonData;
+    document.getElementById('interval').value = temp.interval;
+    document.getElementById('rating').value = temp.minRating;
+    document.getElementById('api_key').value = temp.apiKey;
+    document.getElementById('username').value = temp.username;
+    document.getElementById('json-display').innerText = temp.jsonData;
 
-    api_key = settings.apiKey;
-    username = settings.username;
-    data = settings.jsonData;
+    settings.apiKey = temp.apiKey;
+    settings.username = temp.username;
+    settings.jsonData = temp.jsonData;
 }
 
 update();
-setInterval(update, 30000);
+setInterval(update, settings.interval * 1000);
+
+
 
 
 window.addEventListener('keypress', update);

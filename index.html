@@ -41,13 +41,10 @@
 
                 <form id="settings-form">
                     <label for = "interval">Next album interval(seconds): </label>
-                    <input type = "number" id="interval" value="30"/><br>
+                    <input type = "number" id="interval" value="30" min="30" max="3600"/><br>
 
                     <label for = "rating">Minimum rating(0-100): </label>
                     <input type = "number" id="rating" min="0" max="100" value="0"/><br>
-
-                    <label for = "data">Album info(.txt file in JSON format): </label>
-                    <input type = "file" id="data" accept=".txt" required/><br>
 
                     <label>Currently loaded json:</label><br>
                     <textarea id="json-display" rows="2" cols="100" readonly></textarea><br>
@@ -65,5 +62,6 @@
         </div>
 
         <script src="./index.js"></script>
+        <script src="aotyPY.js"></script>
     </body>
 </html>
