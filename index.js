@@ -108,6 +108,8 @@ async function settingsUpdate(e){
 
     localStorage.setItem('settings', JSON.stringify(settings));
     statusText.innerText = "Settings updated!";
+
+    update();
 }
 
 async function searchLastFM(artist, album){
