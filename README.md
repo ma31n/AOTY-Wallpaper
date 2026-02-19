@@ -12,7 +12,7 @@ An interactive wallpaper for Wallpaper Engine that displays your Album of the Ye
 
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript (no dependencies)
 - **Album Data**: Last.fm API for metadata and artwork
-- **Rating Fetch**: Self-hosted Flask backend ([aotywallpaperhelper](https://aotywallpaperhelper-1.onrender.com/)) using [AlbumOfTheYearAPI](https://github.com/JahsiasWhite/AlbumOfTheYearAPI) by JahsiasWhite
+- **Rating Fetch**: Self-hosted Flask backend ([aotywallpaperhelper](https://github.com/ma31n/AOTYwallpaperHelper)) using [AlbumOfTheYearAPI](https://github.com/JahsiasWhite/AlbumOfTheYearAPI) by JahsiasWhite
 - **Platform**: [Wallpaper Engine](https://www.wallpaperengine.io/) on Windows
 
 ## Quick Setup
