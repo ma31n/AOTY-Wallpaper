@@ -1,11 +1,11 @@
 # AOTY Wallpaper Engine
 
-An interactive wallpaper for Wallpaper Engine that displays your Album of the Year (AOTY) ratings with album artwork and track listings, powered by Last.fm API.
+An interactive web wallpaper for Wallpaper Engine that displays your Album of the Year (AOTY) ratings with album artwork and track listings, powered by Last.fm API.
 
 ## Features
 
 - **Dynamic Album Display**: Auto-rotates through your AOTY ratings with random selection and rating filtering
-- **Live Album Artwork**: Fetches high-quality album covers and track information from Last.fm
+- **Live Album Artwork**: Fetches high-quality album covers and tracks information from Last.fm
 - **Interactive Settings Panel**: Configure update intervals, minimum ratings, and API keys with instant preview
 
 ## Built with
@@ -28,7 +28,7 @@ The wallpaper fetches your AOTY ratings directly from a self-hosted backend serv
 1. Set the wallpaper in Wallpaper Engine by loading it as URL
 2. Click the **⚙️ settings button** on the wallpaper to open the panel
 3. Fill in the following:
-   - **Last.fm Username**: Your AOTY account username
+   - **AOTY Username**: Your AOTY account username
    - **Last.fm API Key**: Your personal API key from step 1
    - **Update Interval**: How often to rotate albums (default: 30s)
    - **Minimum Rating**: Skip albums below this rating threshold (0-100, default: 0)
@@ -42,5 +42,5 @@ Due to Windows restrictions, you must minimize all windows and hide icons in ord
 - The wallpaper sends your AOTY username to the backend service, which fetches your rated albums
 - Last.fm API provides high-quality album artwork and track listings
 - Albums are randomly selected and displayed as your dynamic desktop background
-- All settings are saved locally in browser storage for persistence
+- All settings are saved locally for persistence
 
