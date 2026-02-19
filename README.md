@@ -34,6 +34,9 @@ The wallpaper fetches your AOTY ratings directly from a self-hosted backend serv
    - **Minimum Rating**: Skip albums below this rating threshold (0-100, default: 0)
 4. Click **Save** — the wallpaper will fetch your AOTY data and start rotating!
 
+### USING THE INPUT FIELDS
+Due to Windows restrictions, you must minimize all windows and hide icons in order to type into input fields of the wallpaper. Wallpaper Engine supports a shortcut key for this scenario.
+
 ## How It Works
 
 - The wallpaper sends your AOTY username to the backend service, which fetches your rated albums
