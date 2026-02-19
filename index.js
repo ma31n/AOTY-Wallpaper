@@ -1,7 +1,7 @@
 function getJSONdataFromUsername(username){
     username = username.toLowerCase();
     username = username.replaceAll('_', '-');
-    console.log(`fetching data for ${username}...`);
+    statusText.innerText = `fetching data for ${username}...  (might take a minute or two)`;
     return fetch(`https://aotywallpaperhelper-1.onrender.com/user/${username}`)
 }
 
@@ -73,7 +73,7 @@ function update(){
 
 async function settingsUpdate(e){
     e.preventDefault();
-    console.log('updating settings...');
+    document.getElementById('save-status').innerText = "Updating settings...";
     let interval = document.getElementById('interval').value;
     let minRating = document.getElementById('rating').value;
     let apiKey = document.getElementById('api_key').value;
@@ -83,7 +83,7 @@ async function settingsUpdate(e){
         await getJSONdataFromUsername(username)
         .then(response => {
             if(response.ok) return response.json()
-            window.alert('Failed to fetch user data. Please check your username and try again.');
+            statusText.innerText = 'Failed to fetch user data. Please check your username and try again.';
             throw new Error('Failed to fetch user data', response.status);
             })
         .then(data => {
@@ -107,7 +107,7 @@ async function settingsUpdate(e){
     
 
     localStorage.setItem('settings', JSON.stringify(settings));
-
+    statusText.innerText = "Settings updated!";
 }
 
 async function searchLastFM(artist, album){
@@ -120,14 +120,18 @@ async function searchLastFM(artist, album){
 let settings = {
     interval: document.getElementById('interval').value,
     minRating: document.getElementById('rating').value,
-    apiKey: null,
+    apiKey: "9cac2ae29a26c0653a024c68295349e3",
     username: null,
     jsonData: null
 }
 
+let statusText = document.getElementById('save-status');
+document.getElementById('api_key').value = settings.apiKey;
+
 let temp = localStorage.getItem('settings');
 console.log(settings);
 if(temp!==null){
+    console.log(temp);
     temp = JSON.parse(temp);
 
     document.getElementById('interval').value = temp.interval;
@@ -139,14 +143,23 @@ if(temp!==null){
     settings.apiKey = temp.apiKey;
     settings.username = temp.username;
     settings.jsonData = temp.jsonData;
+    settings.interval = temp.interval;
+    settings.minRating = temp.minRating;
 }
 
 update();
 setInterval(update, settings.interval * 1000);
 
 
-
-
-window.addEventListener('keypress', update);
-
 document.getElementById("settings-form").addEventListener('submit', settingsUpdate);
+
+document.getElementById('settings-container').classList.add('panel-hidden');
+
+document.getElementById('settings-button').addEventListener('click', function(){
+    let settingsContainer = document.getElementById('settings-container');
+    let bodyContainer = document.getElementById('body');
+    statusText.innerText = "";
+    settingsContainer.classList.toggle('panel-hidden');
+    bodyContainer.classList.toggle('panel-hidden');
+
+});
