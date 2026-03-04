@@ -1,4 +1,4 @@
-# AOTY Wallpaper Engine
+# AOTY Web Wallpaper for Wallpaper Engine
 
 An interactive web wallpaper for Wallpaper Engine that displays your Album of the Year (AOTY) ratings with album artwork and track listings, powered by Last.fm API.
 
