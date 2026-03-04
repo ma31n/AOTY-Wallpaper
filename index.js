@@ -41,6 +41,16 @@ function update(){
             document.getElementById('rating-bar').innerText = `${obj[rand].rating}`;
             document.getElementById('rating-bar').style.width = `${obj[rand].rating}%`;
 
+            if(obj[rand].rating >= 70){
+                document.getElementById('rating-bar').style.backgroundColor = '#85CE73';
+            }
+            else if(obj[rand].rating >= 50){
+                document.getElementById('rating-bar').style.backgroundColor = '#F0E68C';
+            }
+            else{
+                document.getElementById('rating-bar').style.backgroundColor = '#D76666';
+            }
+
             let list = document.getElementsByTagName('ol')[0];
             list.innerHTML = '';
             for(let i = 0; i < data.album.tracks.track.length; i++){
@@ -71,7 +81,7 @@ function update(){
 
 }
 
-async function settingsUpdate(e){
+async function settingsUpdate(e, force=false){
     e.preventDefault();
     document.getElementById('save-status').innerText = "Updating settings...";
     let interval = document.getElementById('interval').value;
@@ -79,7 +89,7 @@ async function settingsUpdate(e){
     let apiKey = document.getElementById('api_key').value;
     let username = document.getElementById('username').value;
 
-    if(username!=settings.username){
+    if(username!=settings.username || force==true){
         await getJSONdataFromUsername(username)
         .then(response => {
             if(response.ok) return response.json()
@@ -95,8 +105,8 @@ async function settingsUpdate(e){
     }
 
     if(interval != settings.interval){
-        clearInterval(update);
-        setInterval(update, interval * 1000);
+        clearInterval(intervalId);
+        intervalId = setInterval(update, interval * 1000);
     }
 
     settings.interval = interval;
@@ -127,6 +137,8 @@ let settings = {
     jsonData: null
 }
 
+let intervalId;
+
 let statusText = document.getElementById('save-status');
 document.getElementById('api_key').value = settings.apiKey;
 
@@ -150,10 +162,14 @@ if(temp!==null){
 }
 
 update();
-setInterval(update, settings.interval * 1000);
+intervalId = setInterval(update, settings.interval * 1000);
 
 
 document.getElementById("settings-form").addEventListener('submit', settingsUpdate);
+
+document.getElementById('refresh').addEventListener('click', function(){
+    settingsUpdate(new Event('submit'), true);
+});
 
 document.getElementById('settings-container').classList.add('panel-hidden');
 
