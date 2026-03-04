@@ -25,7 +25,7 @@ The wallpaper fetches your AOTY ratings directly from a self-hosted backend serv
 - Using your personal Last.fm API key guarantees full functionality
 
 ### Step 2: Configure the Wallpaper
-1. Set the wallpaper in Wallpaper Engine by loading it as URL
+1. Set the wallpaper in Wallpaper Engine by loading it as URL (https://ma31n.github.io/AOTY-Wallpaper/)
 2. Click the **⚙️ settings button** on the wallpaper to open the panel
 3. Fill in the following:
    - **AOTY Username**: Your AOTY account username
